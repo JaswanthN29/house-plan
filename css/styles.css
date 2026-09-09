@@ -1,0 +1,421 @@
+:root {
+    --bg-body: #f4f6f9;
+    --bg-surface: #ffffff;
+    --border-color: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+body.dark-theme {
+    --bg-body: #0f172a;
+    --bg-surface: #1e293b;
+    --border-color: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent: #3b82f6;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top Navigation Header */
+header {
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 20px;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.brand-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn-group {
+    display: flex;
+    background: var(--bg-body);
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    gap: 4px;
+}
+
+.btn {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+body.dark-theme .btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.btn.active {
+    background: var(--bg-surface);
+    color: var(--accent);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+    color: white;
+}
+
+.toggle-btn {
+    padding: 8px 12px;
+    font-size: 0.825rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-surface);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.toggle-btn.active {
+    border-color: var(--accent);
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--accent);
+}
+
+/* Main Workspace Layout */
+.workspace {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Canvas Container */
+.canvas-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    overflow: auto;
+    position: relative;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.canvas-wrapper {
+    background: var(--bg-surface);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    padding: 20px;
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+svg#floorplan {
+    display: block;
+    width: 1000px;
+    height: 840px;
+    max-width: 90vw;
+    height: auto;
+    user-select: none;
+}
+
+/* Floating Zoom Controls */
+.floating-controls {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: var(--shadow-md);
+    z-index: 20;
+}
+
+.floating-controls button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-controls button:hover {
+    background: var(--bg-body);
+}
+
+/* Room Inspector Sidebar */
+.sidebar {
+    width: 320px;
+    background: var(--bg-surface);
+    border-left: 1px solid var(--border-color);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: var(--shadow-sm);
+    overflow-y: auto;
+}
+
+.sidebar-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-card {
+    background: var(--bg-body);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 4px;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.room-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.room-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--bg-body);
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.room-item:hover, .room-item.active {
+    border-color: var(--accent);
+    background: rgba(37, 99, 235, 0.05);
+}
+
+.room-item-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.room-item-size {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* SVG Floorplan Specific Styles */
+.room-polygon {
+    transition: fill 0.3s ease, stroke-width 0.2s ease;
+    cursor: pointer;
+}
+
+.room-polygon:hover {
+    filter: brightness(0.97);
+    stroke-width: 4px !important;
+}
+
+.wall-structure {
+    fill: #2f3336;
+    stroke: #1e2124;
+    stroke-width: 1;
+}
+
+.door-arc {
+    fill: none;
+    stroke: #78828a;
+    stroke-width: 1.8;
+    stroke-dasharray: 4,3;
+}
+
+.door-leaf {
+    stroke: #475569;
+    stroke-width: 2.5;
+}
+
+.room-label-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    fill: #2d3748;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+}
+
+.sub-label-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    fill: #4a5568;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+}
+
+.dim-line {
+    stroke: #64748b;
+    stroke-width: 1.2;
+}
+
+.dim-text {
+    font-size: 11px;
+    font-weight: 600;
+    fill: #475569;
+    text-anchor: middle;
+}
+
+/* Blueprint & Wireframe Themes */
+svg.blueprint-mode {
+    background-color: #0b2545 !important;
+}
+svg.blueprint-mode .room-polygon {
+    fill: #134074 !important;
+    stroke: #8da9c4 !important;
+}
+svg.blueprint-mode .wall-structure {
+    fill: #eef4f8 !important;
+}
+svg.blueprint-mode .room-label-text, 
+svg.blueprint-mode .sub-label-text {
+    fill: #ffffff !important;
+}
+svg.blueprint-mode .furniture-group {
+    opacity: 0.6;
+    filter: invert(1);
+}
+
+svg.wireframe-mode .room-polygon {
+    fill: #ffffff !important;
+    stroke: #000000 !important;
+    stroke-width: 2 !important;
+}
+svg.wireframe-mode .wall-structure {
+    fill: #000000 !important;
+}
+svg.wireframe-mode .furniture-group {
+    opacity: 0.4;
+}
+
+/* Print Settings */
+@media print {
+    header, .sidebar, .floating-controls {
+        display: none !important;
+    }
+    body {
+        background: white;
+    }
+    .canvas-container {
+        padding: 0;
+        background: none;
+    }
+    .canvas-wrapper {
+        box-shadow: none;
+        border: none;
+    }
+}
