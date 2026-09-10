@@ -1,5 +1,5 @@
 /**
- * Interactive 2D Apartment Floor Plan Studio - JavaScript Module
+ * Interactive 2D Apartment Floor Plan Studio - Mobile Friendly JS Module
  */
 
 let currentScale = 1;
@@ -93,3 +93,47 @@ function selectRoom(name, area, dim) {
         }
     });
 }
+
+/* Mobile Touch & Gesture Handlers */
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.canvas-container');
+    const wrapper = document.getElementById('canvasWrapper');
+    
+    if (!container || !wrapper) return;
+
+    let touchStartDist = 0;
+    let initialScale = 1;
+    let lastTap = 0;
+
+    container.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+            touchStartDist = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+            initialScale = currentScale;
+        } else if (e.touches.length === 1) {
+            const now = Date.now();
+            if (now - lastTap < 300) {
+                resetZoom();
+            }
+            lastTap = now;
+        }
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2 && touchStartDist > 0) {
+            const dist = Math.hypot(
+                e.touches[0].pageX - e.touches[1].pageX,
+                e.touches[0].pageY - e.touches[1].pageY
+            );
+            const factor = dist / touchStartDist;
+            currentScale = Math.min(Math.max(initialScale * factor, 0.6), 2.5);
+            wrapper.style.transform = `scale(${currentScale})`;
+        }
+    }, { passive: true });
+
+    container.addEventListener('touchend', () => {
+        touchStartDist = 0;
+    }, { passive: true });
+});
