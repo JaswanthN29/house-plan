@@ -34,6 +34,14 @@ function toggleLayer(layerName) {
             el.style.display = show ? 'block' : 'none';
             btn.classList.toggle('active', show);
         }
+    } else if (layerName === 'grid') {
+        const el = document.getElementById('layer-grid');
+        const btn = document.getElementById('togGrid');
+        if (el && btn) {
+            const show = el.style.display === 'none';
+            el.style.display = show ? 'block' : 'none';
+            btn.classList.toggle('active', show);
+        }
     } else if (layerName === 'dimensions') {
         const el = document.getElementById('layer-dimensions');
         const btn = document.getElementById('togDimensions');

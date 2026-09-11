@@ -372,6 +372,30 @@ svg#floorplan {
     text-anchor: middle;
 }
 
+/* Transparent Chessboard Grid Overlay Styles */
+.grid-cell-bg {
+    transition: fill-opacity 0.2s ease;
+}
+
+.grid-cell-label {
+    font-family: 'Plus Jakarta Sans', monospace, sans-serif;
+    user-select: none;
+    pointer-events: none;
+}
+
+body.dark-theme .grid-cell-label {
+    fill: #94a3b8;
+    opacity: 0.9;
+}
+
+svg.blueprint-mode .grid-cell-bg {
+    stroke: #64748b !important;
+}
+
+svg.blueprint-mode .grid-cell-label {
+    fill: #e2e8f0 !important;
+}
+
 /* Blueprint & Wireframe Themes */
 svg.blueprint-mode {
     background-color: #0b2545 !important;
